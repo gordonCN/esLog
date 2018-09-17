@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd    
+    http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd    
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd    
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd    
+    http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+    ">
+	<!-- 自动扫描的包名 -->
+	<context:component-scan base-package="com.**" />
+
+	<bean id="sheduleStaicticTask" class="com.es.statistic.ScheduleTask"></bean>
+
+	<task:annotation-driven /> 
+	<!-- 注释实现 异步 -->
+	<task:executor id="threadPoolTaskExecutor" pool-size="10"
+		queue-capacity="10" />
+	<task:scheduler id="threadPoolTaskScheduler" pool-size="10" />
+
+	<task:scheduled-tasks scheduler="threadPoolTaskScheduler">
+		<!--这里表示的是每隔五分钟执行一次 -->
+		<task:scheduled ref="sheduleStaicticTask" method="errorInfoStatisticMinuteOf5"
+			cron="0 */5 * * * ?" />
+		<task:scheduled ref="sheduleStaicticTask" method="errorInfoStatisticHours"
+		cron="0 4 */1 * * ?" />
+		
+		<task:scheduled ref="sheduleStaicticTask" method="errorInfoStatisticDays"
+		cron="0 18 01 * * ?" />
+		
+	</task:scheduled-tasks>
+
+
+</beans>
