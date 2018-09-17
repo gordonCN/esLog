@@ -28,6 +28,8 @@ public class BossLogData {
 	public String getErrorDescribe() {
 		return errorDescribe;
 	}
+	
+	
 	public void setErrorDescribe(String errorDescribe) {
 		this.errorDescribe = errorDescribe;
 	}
