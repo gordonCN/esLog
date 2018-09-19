@@ -9,7 +9,7 @@ public class Data2EsResultBean implements  java.io.Serializable {
     private long end;
     private boolean result;
     private long cost;
-
+ String a = "ss "; 
 
     public long getCost() {
         return cost;
